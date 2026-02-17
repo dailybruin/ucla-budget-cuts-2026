@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+
+.map-section {
+  display: flex;
+  gap: 40px; /* space between left and right */
+  margin-top: 20px;
+}
+
+.left-column-container,
+.right-column-container {
+  flex: 1; /* equal width */
+}
+
+.map-image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.map-section {
+  display: flex;
+}
+
+.left-column-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 50%;
+}
+
+.right-scroll-wrapper {
+  width: 50%;
+  height: auto;
+  overflow: visible;
+}
+
+.right-column-container {
+  min-height: 100vh; /* each section = one scroll segment */
+  padding: 2rem;
+}
