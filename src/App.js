@@ -31,7 +31,6 @@ function App() {
 return (
   <div>
   
-  //MAP HEADER//
   <h2 style = {{"color": "#165383", "textAlign": "center"}}>
     Where budget cuts have impacted UCLA
   </h2>
