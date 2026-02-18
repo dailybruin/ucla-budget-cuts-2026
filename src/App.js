@@ -1,22 +1,53 @@
+// src/App.js
 import React, { useState, useEffect } from "react";
-import './App.css';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import "./App.css";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import ArticleCardsSection from "./components/ArticleCardsSection";
+
+const a1 = {
+  article_title:
+    "Former UCLA football players recount excitement, intensity of Bruin-Trojan rivalry",
+  article_byline: "Connor Dullinger",
+  article_url:
+    "https://dailybruin.com/2025/11/23/former-ucla-football-players-recount-excitement-intensity-of-bruin-trojan-rivalry",
+  article_image:
+    "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.feature.MJD_.11.23.25.file_-19a0de0cfc3c132740b6be3caa6980bb.jpg",
+};
+
+const a2 = {
+  article_title:
+    "Looking ahead to UCLA football’s 2026 season following lackluster 2025 campaign",
+  article_byline: "Connor Dullinger and Grant Walters",
+  article_url:
+    "https://dailybruin.com/2025/11/23/looking-ahead-to-ucla-footballs-2026-season-following-lackluster-2025-campaign",
+  article_image:
+    "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.DullysDrop.UCLAFuture.11.20.25.AGS_-2414ff54267f479b1d27c4ac52a51ec3.jpg",
+};
+
+const fallbackArticles = [a1, a2, a1, a2, a1, a2, a1, a2, a1];
 
 function App() {
-  const [ data, setData ] = useState(null);
-  
-  useEffect(() => {
-		fetch("<TODO: insert api url here>")
-		.then(res => res.json())
-		.then(res => setData(res.data['article.aml']))
-  }, [])
+  const [data, setData] = useState(null);
 
-  return data && (
+  useEffect(() => {
+    // fetch("<TODO: insert api url here>")
+    //   .then((res) => res.json())
+    //   .then((res) => setData(res.data["article.aml"]));
+  }, []);
+
+  const articles = data?.articles ?? fallbackArticles;
+
+  return (
     <div className="App">
-      <Header/>
-      Hello Daily Bruin!
-      <Footer/>
+      <Header />
+
+      <ArticleCardsSection
+        title="The Bruin’s full coverage of funding cuts"
+        articles={articles}
+      />
+
+      <Footer />
     </div>
   );
 }
