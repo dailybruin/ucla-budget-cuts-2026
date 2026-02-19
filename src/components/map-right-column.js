@@ -21,7 +21,8 @@ export default function RightColumn ({defaultProps, index, setActiveIndex}) {
                 }
             },
             {
-                threshold: 0.6  // 60% visible = active
+                threshold: 0,             // trigger as soon as section starts to appear
+    rootMargin: "-40% 0px 0px 0px" 
             }
         );
 
@@ -60,6 +61,10 @@ export default function RightColumn ({defaultProps, index, setActiveIndex}) {
               url: defaultProps.article_url_3,
               image: defaultProps.article_image_3
             }}/>
+             <div style={{ height: "200px" }} />
+              <div style={{ height: "200px" }} />
+               <div style={{ height: "200px" }} />
         </div>
+       
     );
 }
