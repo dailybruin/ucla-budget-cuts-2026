@@ -1,0 +1,96 @@
+/* ----- Desktop Styles ----- */
+.map-section {
+  display: flex;
+  margin-top: 20px;
+  padding-right: 0; 
+  width: 100%;
+}
+
+.left-column-container,
+.right-column-container {
+  flex: 0 0 50%; /* equal width */
+  min-width: 0;
+}
+
+.left-column-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  padding-left: 0; 
+}
+
+.right-column-container {
+  min-height: 100vh; /* each section = one scroll segment */
+  padding-right: 6rem; 
+
+}
+
+.map-image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  padding-top: 15%; /* desktop padding for visual spacing */
+}
+
+.map-title {
+  color: #165383;
+  text-align: center; 
+  margin: 1%; 
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 90px;
+  }
+
+.map-title {
+  color: #165383;
+  text-align: center; 
+  margin: 1%; 
+  font-size: 30px;
+}
+  .map-image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  padding: 0%; /* desktop padding for visual spacing */
+  margin: 0;
+}
+.right-column-container {
+  min-height: auto; /* each section = one scroll segment */
+  padding: 0;
+  padding-bottom: 20%; 
+}
+  .map-section {
+    display: flex;
+    flex-direction: column;  /* stack left and right vertically */
+    width: 100vw;            /* full viewport width */
+    max-width: 100%;         /* ensure no restriction from parent */
+    margin-bottom: 10%;               /* remove any default margins */
+    box-sizing: border-box;  /* include padding in width */
+    align-items: stretch;    /* make child columns full width */
+   /* height: 100vh;
+  scroll-snap-type: y mandatory;*/
+  }
+
+  .left-column-container {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0; 
+  height: auto; 
+  
+}
+.mobile-map-item {
+  height: auto;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+}
+}

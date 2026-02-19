@@ -1,18 +1,52 @@
 /* map-left-column.css */
+
+/* LEFT COLUMN (desktop default) */
 .left-column-container {
-  flex: 1; /* same as right column */
+  flex: 1; /* same width as right column */
   display: flex;
-  justify-content: center; /* center the image */
+  justify-content: center; /* center the image horizontally */
+  position: sticky;        /* sticky for desktop */
+  top: 50%;                /* vertical middle of viewport */
+  transform: translateY(-50%);
 }
 
 .map-image-container {
   width: 100%;
-  max-width: 566px; /* max width from Figma */
+  /*background-color: aqua;*/
+  max-width: 566px;
+  min-width: 200px;  /*  max width from Figma */
 }
 
 .map-image-container img {
-  width: 100%;     /* scales with container */
-  height: auto;    /* keeps aspect ratio (566:753) */
+  width: 90%;     /* scales with container */
+  height: auto;    /* keeps aspect ratio */
   display: block;
-  padding-top: 15%;
+}
+
+/* MOBILE STYLES */
+@media (max-width: 768px) {
+  .map-section {
+    flex-direction: column; /* stack left and right */
+  }
+
+  .left-column-container {
+    width: 100%;        /* full width */
+    flex: none;         /* disable flex:1 */
+    position: static;   /* remove sticky */
+    transform: none;    /* remove translateY */
+    justify-content: center;
+    margin: 0;
+    padding: 0; /* optional spacing from right column */
+  }
+
+  .map-image-container img {
+    width: 100%;        /* scale to container */
+    padding: 0;     /* remove extra padding for mobile */
+    margin:0;
+  }
+
+  .map-image-container {
+  width: 100%;
+  max-width: 566px; /*  max width from Figma */
+}
 }
