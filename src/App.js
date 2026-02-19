@@ -25,15 +25,19 @@ const a2 = {
     "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.DullysDrop.UCLAFuture.11.20.25.AGS_-2414ff54267f479b1d27c4ac52a51ec3.jpg",
 };
 
-const fallbackArticles = [a1, a2, a1, a2, a1, a2, a1, a2, a1];
+const fallbackArticles = [a1, a2, a1, a2, a1, a2, a1, a2, a1, a2, a1, a2];
 
 function App() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    // fetch("<TODO: insert api url here>")
-    //   .then((res) => res.json())
-    //   .then((res) => setData(res.data["article.aml"]));
+  fetch("<TODO: insert api url here>")
+    .then((res) => res.json())
+    .then((res) => setData(res.data["article.aml"]))
+    .catch((err) => {
+      console.error(err);
+      setData(null);
+    });
   }, []);
 
   const articles = data?.articles ?? fallbackArticles;
