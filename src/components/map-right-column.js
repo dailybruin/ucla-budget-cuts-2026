@@ -63,7 +63,7 @@ export default function RightColumn ({defaultProps, index, setActiveIndex}) {
             }}/>
              <div style={{ height: "200px" }} />
               <div style={{ height: "200px" }} />
-               <div style={{ height: "200px" }} />
+              <div style={{ height: "200px" }} />
         </div>
        
     );
