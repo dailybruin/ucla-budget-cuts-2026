@@ -11,121 +11,95 @@ const Container = styled.div`
   position: relative;
 `;
 
-const TimelineItem = styled.div`
+const Timeline = styled.div`
   display: flex;
   width: 80%;
+  flex-direction: column;
+  align-items: center;
+  border-left: 1px solid black;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+
+  @media (max-width: 425px) {
+    width: 90%;
+    margin-right: 5%;
+  }
+`;
+
+const TimelineItem = styled.div`
+  display: flex;
+  width: 100%;
   max-width: 1200px;
-  padding-bottom: 70px;
+  padding-bottom: 10vh;
   position: relative;
   will-change: opacity, transform, filter;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 14px;
-    bottom: 0;
-    left: -1px;
-    border-left: 2px solid #000;
-  }
-
-  ${props => props.isLast && css`
-    &::before {
-      display: none;
-    }
-  `}
-  
-  /* INACTIVE DEFAULT */
-  opacity: 0.18;
-  transform: translateY(18px);
-  filter: blur(1px);
-
-  transition:
-    opacity 650ms ease,
-    transform 650ms ease,
-    filter 650ms ease;
-
-  ${props => props.isActive && css`
-    /* ACTIVE */
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  `}
-
-  @media (max-width: 768px) {
+  @media (max-width: 425px) {
     flex-direction: column;
-    width: 90%;
-    padding-bottom: 40px;
-
-    /* blur can look weird on mobile; optional */
-    filter: none;
-    opacity: ${props => (props.isActive ? 1 : 0.35)};
+    padding-bottom: 15vh;
   }
 `;
 
 const DateColumn = styled.div`
     width: 25%;
-    padding-left: 20px; /* Space between line and date */
+    padding-left: 5%; /* Space between line and date */
     padding-right: 0;
     text-align: left; /* Shift text to left */
     border-left: none;
     border-right: none;
     position: relative;
-    
-    /* The Dot */
-    &::after {
-        content: '';
-        position: absolute;
-        top: 0; 
-        left: -6px; /* Center dot on left border */
-        width: 10px;
-        height: 10px;
-        background-color: #000;
-        border-radius: 50%;
-        transform: scale(0.85);
-        opacity: 0.35;
-        transition: transform 300ms ease, opacity 300ms ease;
-    }
-    ${props => props.isActive && css`
-    &::after {
-      transform: scale(1);
-      opacity: 1;
-    }
-  `}
-
 
     @media (max-width: 768px) {
-        width: 100%;
         text-align: left;
-        border-left: none;
-        padding-left: 20px;
-        margin-bottom: 15px;
-        
-        &::after {
-            left: -6px; /* Keep consistent */
-        }
     }
+  @media (max-width: 425px) {
+    width: 100%;
+    margin-bottom: 0;
+  }
+`;
+
+const Dot = styled.div`
+    /* The Dot */
+    content: '';
+    position: absolute;
+    left: -5px; /* Center dot on left border */
+    width: 9px;
+    height: 9px;
+    background-color: black;
+    border-radius: 50%;
+    transform: scale(0.85);
+    opacity: 0.35;
+    transition: transform 300ms ease, opacity 300ms ease;
+    ${props => props.isActive && css`
+      transform: scale(1);
+      opacity: 1;
+  `}
 `;
 
 const DateText = styled.h2`
+  width: 100%;
   font-size: 2rem;
   font-weight: bold;
   color: #2c3e50;
-  margin: 0;
+  margin-top: -15px;
   position: sticky;
-  top: 100px;
+  top: 40px;
 `;
 
 const ContentColumn = styled.div`
   width: 75%;
-  padding-left: 100px;
+  margin-left: 10%;;
   display: flex;
   flex-direction: column;
   text-align: left;
 
   @media (max-width: 768px) {
     width: 100%;
-    padding-left: 18px;
-    margin-left: 2px;
+  }
+  @media (max-width: 425px) {
+    margin-left: 5%;
   }
 `;
 
@@ -158,7 +132,7 @@ const Image = styled.img`
 
   opacity: 0;
   transform: translateY(14px) scale(0.99);
-  transition: opacity 800ms ease, transform 800ms ease;
+  transition: opacity 200ms ease, transform 200ms ease;
   transition-delay: 120ms;
 
   ${props => props.isActive && css`
@@ -169,104 +143,119 @@ const Image = styled.img`
 
 /** Helper: one section that becomes "active" when it hits the center band */
 const ScrollActivateItem = ({ children, onActiveChange }) => {
-  const ref = useRef(null);
+    const ref = useRef(null);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        onActiveChange(entry.isIntersecting);
-      },
-      {
-        // This makes “active” happen around the middle of the viewport (NYT-style)
-        root: null,
-        rootMargin: "-45% 0px -45% 0px",
-        threshold: 0,
-      }
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const entry = entries[0];
+                onActiveChange(entry.isIntersecting);
+            },
+            {
+                // This makes “active” happen around the middle of the viewport (NYT-style)
+                root: null,
+                rootMargin: "-45% 0px -45% 0px",
+                threshold: 0,
+            }
+        );
+
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [onActiveChange]);
+
+    return (
+        <div ref={ref} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            {children}
+        </div>
     );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [onActiveChange]);
-
-  return (
-    <div ref={ref} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-      {children}
-    </div>
-  );
 };
 
 const TimelineContainer = (data) => {
-  const timeline = data ? [
-    {
-      timeline_date: "December 2006",
-      timeline_description:
-        "The highlight of my career is being able to bust their ass. December 2, 2006, best day of my college career.",
-      timeline_image:
-        "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.feature.MJD_.11.23.25.file_-19a0de0cfc3c132740b6be3caa6980bb.jpg",
-    },
-    {
-      timeline_date: "November 2008",
-      timeline_description:
-        "Another significant event in the timeline, showcasing the intense rivalry and the moments that defined the era.",
-      timeline_image:
-        "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.feature.MJD_.11.23.25.file_-19a0de0cfc3c132740b6be3caa6980bb.jpg",
-    },
-    {
-      timeline_date: "October 2010",
-      timeline_description:
-        "Reflecting on the past victories and the challenges overcome during this period.",
-      timeline_image:
-        "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.feature.MJD_.11.23.25.file_-19a0de0cfc3c132740b6be3caa6980bb.jpg",
-    },
-    {
-      timeline_date: "September 2012",
-      timeline_description:
-        "A memorable game that brought the community together and solidified the team's legacy.",
-      timeline_image:
-        "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.feature.MJD_.11.23.25.file_-19a0de0cfc3c132740b6be3caa6980bb.jpg",
-    },
-  ] : data.timeline;
+    const timeline = !data.data ? [
+        {
+            timeline_date: "December 2006",
+            timeline_description:
+                "The highlight of my career is being able to bust their ass. December 2, 2006, best day of my college career.",
+            timeline_image:
+                "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.feature.MJD_.11.23.25.file_-19a0de0cfc3c132740b6be3caa6980bb.jpg",
+        },
+        {
+            timeline_date: "November 2008",
+            timeline_description:
+                "Another significant event in the timeline, showcasing the intense rivalry and the moments that defined the era.",
+            timeline_image:
+                "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.feature.MJD_.11.23.25.file_-19a0de0cfc3c132740b6be3caa6980bb.jpg",
+        },
+        {
+            timeline_date: "October 2010",
+            timeline_description:
+                "Reflecting on the past victories and the challenges overcome during this period.",
+            timeline_image:
+                "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.feature.MJD_.11.23.25.file_-19a0de0cfc3c132740b6be3caa6980bb.jpg",
+        },
+        {
+            timeline_date: "September 2012",
+            timeline_description:
+                "A memorable game that brought the community together and solidified the team's legacy.",
+            timeline_image:
+                "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.feature.MJD_.11.23.25.file_-19a0de0cfc3c132740b6be3caa6980bb.jpg",
+        },
+    ] : data.timeline;
 
-  const [activeIndex, setActiveIndex] = useState(-1);
+    const [activeIndex, setActiveIndex] = useState(-1);
+    const [dotTops, setDotTops] = useState([])
+    const timelineItemRefs = useRef([])
+    useEffect(() => {
+        const handleScroll = () => {
+            const tops = timelineItemRefs.current.map((ref) => {
+                if (!ref) return 0
+                const rect = ref.getBoundingClientRect()
+                return Math.max(0, Math.min(55 - rect.top, rect.height))
+            })
+            setDotTops(tops)
+        }
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
+    return (
+        <Container>
+            <Timeline>
+                {timeline.map((event, index) => {
+                    const isActive = index === activeIndex;
 
-  return (
-    <Container>
-      {timeline.map((event, index) => {
-        const isActive = index === activeIndex;
+                    return (
+                        <ScrollActivateItem
+                            key={index}
+                            onActiveChange={(inView) => {
+                                if (inView) setActiveIndex(index);
+                            }}
+                        >
+                            <TimelineItem isActive={isActive} isLast={index === timeline.length - 1} ref={el => timelineItemRefs.current[index] = el}>
+                                <Dot isActive={isActive} style={{ top: `${dotTops[index] ?? 0}px` }} />
+                                <DateColumn isActive={isActive}>
+                                    <DateText>{event.timeline_date}</DateText>
+                                </DateColumn>
+                                <ContentColumn>
+                                    <Description isActive={isActive}>
+                                        {event.timeline_description}
+                                    </Description>
 
-        return (
-          <ScrollActivateItem
-            key={index}
-            onActiveChange={(inView) => {
-              if (inView) setActiveIndex(index);
-            }}
-          >
-            <TimelineItem isActive={isActive} isLast={index === timeline.length - 1}>
-              <DateColumn isActive={isActive}>
-                <DateText>{event.timeline_date}</DateText>
-              </DateColumn>
-
-              <ContentColumn>
-                <Description isActive={isActive}>
-                  {event.timeline_description}
-                </Description>
-
-                <Image
-                  isActive={isActive}
-                  src={event.timeline_image}
-                  alt={`Timeline event ${event.timeline_date}`}
-                />
-              </ContentColumn>
-            </TimelineItem>
-          </ScrollActivateItem>
-        );
-      })}
-    </Container>
-  );
+                                    <Image
+                                        isActive={isActive}
+                                        src={event.timeline_image}
+                                        alt={`Timeline event ${event.timeline_date}`}
+                                    />
+                                </ContentColumn>
+                            </TimelineItem>
+                        </ScrollActivateItem>
+                    );
+                })}
+            </Timeline>
+        </Container>
+    );
 };
 
 export default TimelineContainer;

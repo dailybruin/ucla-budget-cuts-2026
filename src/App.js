@@ -17,7 +17,7 @@ function App() {
   return  (
     <div className="App">
       <Header/>
-      <TimelineContainer timeline={data} />
+      <TimelineContainer data={data} />
       Hello Daily Bruin!
       <Footer/>
     </div>
