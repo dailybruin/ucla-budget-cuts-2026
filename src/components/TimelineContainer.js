@@ -16,7 +16,23 @@ const TimelineItem = styled.div`
   width: 80%;
   max-width: 1200px;
   padding-bottom: 70px;
+  position: relative;
   will-change: opacity, transform, filter;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    bottom: 0;
+    left: -1px;
+    border-left: 2px solid #000;
+  }
+
+  ${props => props.isLast && css`
+    &::before {
+      display: none;
+    }
+  `}
   
   /* INACTIVE DEFAULT */
   opacity: 0.18;
@@ -47,42 +63,47 @@ const TimelineItem = styled.div`
 `;
 
 const DateColumn = styled.div`
-  width: 25%;
-  padding-left: 20px;
-  padding-right: 0;
-  text-align: left;
-  border-left: 2px solid #000;
-  position: relative;
-
-  /* Dot */
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -6px;
-    width: 10px;
-    height: 10px;
-    background-color: #000;
-    border-radius: 50%;
-
-    transform: scale(0.85);
-    opacity: 0.35;
-    transition: transform 300ms ease, opacity 300ms ease;
-  }
-
-  ${props => props.isActive && css`
+    width: 25%;
+    padding-left: 20px; /* Space between line and date */
+    padding-right: 0;
+    text-align: left; /* Shift text to left */
+    border-left: none;
+    border-right: none;
+    position: relative;
+    
+    /* The Dot */
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0; 
+        left: -6px; /* Center dot on left border */
+        width: 10px;
+        height: 10px;
+        background-color: #000;
+        border-radius: 50%;
+        transform: scale(0.85);
+        opacity: 0.35;
+        transition: transform 300ms ease, opacity 300ms ease;
+    }
+    ${props => props.isActive && css`
     &::after {
       transform: scale(1);
       opacity: 1;
     }
   `}
 
-  @media (max-width: 768px) {
-    width: 100%;
-    text-align: left;
-    padding-left: 20px;
-    margin-bottom: 15px;
-  }
+
+    @media (max-width: 768px) {
+        width: 100%;
+        text-align: left;
+        border-left: none;
+        padding-left: 20px;
+        margin-bottom: 15px;
+        
+        &::after {
+            left: -6px; /* Keep consistent */
+        }
+    }
 `;
 
 const DateText = styled.h2`
@@ -171,7 +192,11 @@ const ScrollActivateItem = ({ children, onActiveChange }) => {
     return () => observer.disconnect();
   }, [onActiveChange]);
 
-  return <div ref={ref}>{children}</div>;
+  return (
+    <div ref={ref} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      {children}
+    </div>
+  );
 };
 
 const TimelineContainer = () => {
@@ -220,7 +245,7 @@ const TimelineContainer = () => {
               if (inView) setActiveIndex(index);
             }}
           >
-            <TimelineItem isActive={isActive}>
+            <TimelineItem isActive={isActive} isLast={index === tempTimeline.length - 1}>
               <DateColumn isActive={isActive}>
                 <DateText>{event.timeline_date}</DateText>
               </DateColumn>
