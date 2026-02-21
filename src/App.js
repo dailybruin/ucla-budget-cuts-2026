@@ -7,7 +7,8 @@ function App() {
   const [ data, setData ] = useState(null);
   
   useEffect(() => {
-		fetch("<TODO: insert api url here>")
+    // TODO: replace this link
+		fetch("https://oink.dailybruin.com/api/packages/flatpages/test")
 		.then(res => res.json())
 		.then(res => setData(res.data['article.aml']))
   }, [])
