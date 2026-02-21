@@ -8,11 +8,17 @@ const Bar = styled.header`
   position: sticky;
   top: 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
   background: #165383;
 =======
   z-index: 2001;
 
 >>>>>>> origin/headers/articles
+=======
+  z-index: 2001;
+
+  background: #165383;
+>>>>>>> 4bc2cba6a6473ad65fcb8283dc0463a5be1226fe
   width: 100%;
   height: 48px;
   background: ${FLATPAGE_BLUE};

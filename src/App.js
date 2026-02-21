@@ -1,8 +1,4 @@
-// src/App.js
 import React, { useState, useEffect } from "react";
-import "./App.css";
-
-// Components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Landing from "./components/Landing";
@@ -71,12 +67,10 @@ export default function App() {
       <Landing data={data} />
       <Subheader data={data} />
 
-      {/* Map section */}
       <section id="map">
         {isMobile ? <MapMobilePage /> : <MapDesktopPage />}
       </section>
 
-      {/* Read more articles */}
       <section id="read-more">
         <ArticleCardsSection
           title="Read more of The Bruin’s budget cut coverage:"
