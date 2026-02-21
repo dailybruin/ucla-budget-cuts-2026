@@ -9,6 +9,7 @@ const Bar = styled.header`
   top: 0;
   z-index: 2001;
 
+  background: #165383;
   width: 100%;
   height: 48px;
   background: ${FLATPAGE_BLUE};
