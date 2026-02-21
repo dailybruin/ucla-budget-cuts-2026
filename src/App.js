@@ -14,8 +14,12 @@ function App() {
   
   useEffect(() => {
     // TODO: replace this link
-		fetch("https://oink.dailybruin.com/api/packages/flatpages/test")
+		fetch("/api/packages/flatpages/test")
 		.then(res => res.json())
+    .then(res => {
+      console.log("Status:", res.status);
+      return res.json();
+    })
 		.then(res => setData(res.data['article.aml']))
   }, [])
 
