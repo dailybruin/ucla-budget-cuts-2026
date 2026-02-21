@@ -7,6 +7,7 @@ import Credits from "./components/Credits";
 import ArticleCardsSection from "./components/ArticleCardsSection";
 import MapDesktopPage from "./map-desktop.js";
 import MapMobilePage from "./map-mobile.js";
+import TimelineContainer from './components/TimelineContainer';
 
 // Fallback articles
 const a1 = {
@@ -31,15 +32,15 @@ const a2 = {
 
 const fallbackArticles = [a1, a2, a1, a2];
 
-export default function App() {
-  // Mobile breakpoint
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
+function App() {
+  // const [ data, setData ] = useState(null);
   // Main article data
   const [data, setData] = useState({
     headline: "\"A Perfect Storm\": How Budget Cuts Have Impacted UCLA",
     subheading: `UCLA is generating an annual structural budget deficit approaching $425 million, Stephen Agostini, UCLA's Chief Financial Officer, told the Daily Bruin on Feb. 6. The university has not posted its annual <u>financial reports</u> – which Agostini said contain erroneous numbers – for the last two fiscal years as of early February. Chancellor Julio Frenk described several factors – some of which are laid out in the timeline below – as combining to create "a perfect storm" culminating in UCLA's current budget crisis. Programs across campus have also had their funding slashed, from student-run retention projects to tour guide organizations.\n\nThe Daily Bruin News team's special project – "A Perfect Storm": How Budget Cuts Have Impacted UCLA – outlines the history behind UCLA's budget shortfalls and tracks the parts of campus that have faced cuts.`
   });
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   // Handle window resize for mobile/desktop map
   useEffect(() => {
@@ -47,25 +48,33 @@ export default function App() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  // Fetch article data
+  
   useEffect(() => {
     fetch("/api/packages/flatpages/test")
       .then(res => res.json())
       .then(res => {
         console.log("Status:", res.status);
         if (res.data && res.data['article.aml']) {
-          setData(res.data['article.aml']);
+          // setData(res.data['article.aml']);
+          setData(prev => ({
+            ...prev,
+            ...res.data['article.aml']
+          }));
         }
       })
       .catch(err => console.error("Error fetching data:", err));
   }, []);
 
-  return (
+  return  (
     <div className="App">
       <Header />
-      <Landing data={data} />
-      <Subheader data={data} />
+      <section id="home">
+        <Landing data={data} />
+        <Subheader data={data} />
+      </section>
+      <section id="timeline">
+        <TimelineContainer data={data} />
+      </section>
 
       <section id="map">
         {isMobile ? <MapMobilePage /> : <MapDesktopPage />}
@@ -78,8 +87,12 @@ export default function App() {
         />
       </section>
 
-      <Credits data={data} />
+      <section id="about">
+        <Credits data={data} />
+      </section>
       <Footer />
     </div>
   );
 }
+
+export default App;

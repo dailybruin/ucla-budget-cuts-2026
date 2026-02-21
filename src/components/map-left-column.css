@@ -2,12 +2,13 @@
 
 /* LEFT COLUMN (desktop default) */
 .left-column-container {
-  flex: 1; /* same width as right column */
+  flex: 0 0 50%;
   display: flex;
   justify-content: center; /* center the image horizontally */
+  align-items: center;
   position: sticky;        /* sticky for desktop */
-  top: 50%;                /* vertical middle of viewport */
-  transform: translateY(-50%);
+  top: 50px;                /* vertical middle of viewport */
+  transform: none;
 }
 
 .map-image-container {

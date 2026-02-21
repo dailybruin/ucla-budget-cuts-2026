@@ -13,6 +13,9 @@ const SubheaderContainer = styled.div`
     align-items: center;
     background-color: #fff;
     margin: 0 auto;
+    @media (max-width: 768px) {
+      padding-bottom: 30%;
+    }
 `;
 
 const SubheaderText = styled.h1`
