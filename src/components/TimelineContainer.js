@@ -111,9 +111,11 @@ const ContentColumn = styled.div`
 `;
 
 const Description = styled.p`
-  font-size: 1.1rem;
+  font-size: 20px;
   font-family: 'Source Sans 3', sans-serif;
+  font-weight: 400;
   line-height: 1.6;
+  letter-spacing: 0%;
   margin-top: 0;
   margin-bottom: 20px;
   text-align: left;
