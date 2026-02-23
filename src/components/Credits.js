@@ -84,26 +84,8 @@ const Position = styled.p`
   margin: 0;
 `;
 
-const Credits = ({ data }) => {
-  if (!data) return null;
-
-  const writers = data.writers || [
-    { name: "Daily Bruin News team", position: "" }
-  ];
-
-  const developers = data.developers || [
-    { name: "First, Last name", position: "DB Position" },
-    { name: "First, Last name", position: "DB Position" },
-    { name: "First, Last name", position: "DB Position" },
-    { name: "First, Last name", position: "DB Position" },
-    { name: "First, Last name", position: "DB Position" },
-    { name: "First, Last name", position: "DB Position" }
-  ];
-
-  const designers = data.designers || [
-    { name: "First, Last name", position: "DB Position" },
-    { name: "First, Last name", position: "DB Position" },
-    { name: "First, Last name", position: "DB Position" }
+const Credits = ({ developers = [], designers = [] }) => {
+  const writers = [{ name: "Daily Bruin News team", position: "" }
   ];
 
   return (
@@ -127,7 +109,7 @@ const Credits = ({ data }) => {
           <Grid>
             {developers.map((dev, index) => (
               <CreditCard key={index}>
-                <Name>{dev.name}</Name>
+                <Name>{dev.last_name}, {dev.first_name}</Name>
                 <Position>{dev.position}</Position>
               </CreditCard>
             ))}

@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
 
+h1{
+  font-size: 60px;
+  font-family: "Literata", serif;
+  font-weight: 600;
+  font-style: Semibold;
+  line-height: 100%;
+}
+
 h2{
   font-size: 45px;
   font-family: "Literata", serif;
@@ -20,4 +28,16 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@media (max-width: 768px) {
+
+  h1{
+    font-size: 36px;
+  }
+
+  h3{
+    font-size: 16px;
+  }
+
 }

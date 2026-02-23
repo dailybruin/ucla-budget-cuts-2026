@@ -11,6 +11,8 @@ function MapImage({ image }) {
 
 /* left column of the map section */
 export default function LeftColumn({ defaultProps }) {
+    if (!defaultProps) return null;
+    // console.log(defaultProps)
     return (
         <div className="left-column-container">
             <MapImage

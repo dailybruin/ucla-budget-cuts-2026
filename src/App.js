@@ -50,19 +50,15 @@ function App() {
   }, []);
   
   useEffect(() => {
-    fetch("/api/packages/flatpages/test")
+      fetch("https://oink.dailybruin.com/api/packages/flatpages/test-package")
       .then(res => res.json())
       .then(res => {
-        console.log("Status:", res.status);
+        // console.log("Data:", res.data['article.aml']);
         if (res.data && res.data['article.aml']) {
-          // setData(res.data['article.aml']);
-          setData(prev => ({
-            ...prev,
-            ...res.data['article.aml']
-          }));
+          setData(res.data['article.aml']);
         }
       })
-      .catch(err => console.error("Error fetching data:", err));
+      // .catch(err => console.error("Error fetching data:", err));
   }, []);
 
   return  (
@@ -73,22 +69,22 @@ function App() {
         <Subheader data={data} />
       </section>
       <section id="timeline">
-        <TimelineContainer data={data} />
+        <TimelineContainer data={data.timeline} />
       </section>
 
       <section id="map">
-        {isMobile ? <MapMobilePage /> : <MapDesktopPage />}
+        {isMobile ? <MapMobilePage data={data.maps}/> : <MapDesktopPage data={data.maps}/>}
       </section>
 
       <section id="read-more">
         <ArticleCardsSection
           title="Read more of The Bruin’s budget cut coverage:"
-          articles={fallbackArticles}
+          articles={data.articles}
         />
       </section>
 
       <section id="about">
-        <Credits data={data} />
+        <Credits developers={data.developer_credits} designers={data.designers_journalist_credit} />
       </section>
       <Footer />
     </div>
