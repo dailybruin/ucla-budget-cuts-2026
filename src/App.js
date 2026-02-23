@@ -30,7 +30,7 @@ const a2 = {
     "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.DullysDrop.UCLAFuture.11.20.25.AGS_-2414ff54267f479b1d27c4ac52a51ec3.jpg",
 };
 
-const fallbackArticles = [a1, a2, a1, a2];
+const fallbackArticles = [a1, a2, a1, a2, a1, a2, a1, a2, a1, a2, a1, a2];
 
 function App() {
   // const [ data, setData ] = useState(null);

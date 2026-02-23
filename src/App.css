@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+/* Sticky header offset for in-page navigation */
+.sectionMap {
+  scroll-margin-top: 80px; /* 48px header + breathing room */
+  padding-top: 16px;       /* visual space after landing */
+}
+
+html {
+  scroll-padding-top: 80px;
+}

@@ -29,10 +29,11 @@ const Inner = styled.div`
 `;
 
 /* Left: DAILY BRUIN */
-const Brand = styled.button`
+const Brand = styled.a`
   border: none;
   background: transparent;
   cursor: pointer;
+  text-decoration: none;
 
   color: #fff;
   text-align: center;
@@ -184,13 +185,14 @@ export default function Header() {
     };
   }, [open]);
 
-  // (2) Scroll offset: use actual bar height (no guessing)
+  //Scroll offset for each section
   const scrollToId = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
 
     const offset = barRef.current?.offsetHeight ?? 48;
-    const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
+    const extra = 16; //spacing below the nav 
+    const y = el.getBoundingClientRect().top + window.pageYOffset - (offset + extra);
 
     window.scrollTo({ top: y, behavior: "smooth" });
   };
@@ -204,7 +206,9 @@ export default function Header() {
     <>
       <Bar ref={barRef}>
         <Inner>
-          <Brand onClick={() => onNav("home")}>DAILY BRUIN</Brand>
+          <Brand href="https://dailybruin.com" target="_blank" rel="noreferrer">
+          DAILY BRUIN
+          </Brand>
 
           <DesktopNav aria-label="Primary navigation">
             {links.map((l) => (
@@ -222,7 +226,9 @@ export default function Header() {
 
       <MobileMenu open={open} aria-label="Mobile menu">
         <MobileTop>
-          <Brand onClick={() => onNav("home")}>DAILY BRUIN</Brand>
+          <Brand href="https://dailybruin.com" target="_blank" rel="noreferrer">
+          DAILY BRUIN
+          </Brand>
           <BurgerButton
             as="button"
             aria-label="Close menu"
