@@ -43,11 +43,12 @@ const Grid = styled.div`
 `;
 
 export default function ArticleCardsSection({ title, articles }) {
+  const all_articles = articles ?? [];
   return (
     <Section>
       <Title>{title}</Title>
       <Grid>
-        {articles.map((a, idx) => (
+        {all_articles.map((a, idx) => (
           <ArticleCard
             key={a.article_url ?? idx}
             href={a.article_url}

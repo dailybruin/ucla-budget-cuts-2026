@@ -173,36 +173,8 @@ const ScrollActivateItem = ({ children, onActiveChange }) => {
 };
 
 const TimelineContainer = (data) => {
-    const timeline = data?.timeline ?? [
-        {
-        timeline_date: "December 2006",
-        timeline_description:
-            "The highlight of my career is being able to bust their ass. December 2, 2006, best day of my college career.",
-        timeline_image:
-            "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.feature.MJD_.11.23.25.file_-19a0de0cfc3c132740b6be3caa6980bb.jpg",
-        },
-        {
-        timeline_date: "November 2008",
-        timeline_description:
-            "Another significant event in the timeline, showcasing the intense rivalry and the moments that defined the era.",
-        timeline_image:
-            "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.feature.MJD_.11.23.25.file_-19a0de0cfc3c132740b6be3caa6980bb.jpg",
-        },
-        {
-        timeline_date: "October 2010",
-        timeline_description:
-            "Reflecting on the past victories and the challenges overcome during this period.",
-        timeline_image:
-            "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.feature.MJD_.11.23.25.file_-19a0de0cfc3c132740b6be3caa6980bb.jpg",
-        },
-        {
-        timeline_date: "September 2012",
-        timeline_description:
-            "A memorable game that brought the community together and solidified the team's legacy.",
-        timeline_image:
-            "https://assets3.dailybruin.com/images/rivalry-issue-25-26/A.sp_.football.feature.MJD_.11.23.25.file_-19a0de0cfc3c132740b6be3caa6980bb.jpg",
-        },
-    ];
+    // console.log(data.data)
+    const timeline = data?.data ?? [];
 
     const [activeIndex, setActiveIndex] = useState(-1);
     const [dotTops, setDotTops] = useState([])
