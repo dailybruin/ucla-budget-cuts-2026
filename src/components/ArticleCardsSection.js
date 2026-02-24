@@ -20,7 +20,8 @@ const Title = styled.h2`
   font-weight: 500;
   line-height: normal;
 
-  margin: 0 0 clamp(16px, 2.5vw, 28px) 0;
+  /* increased bottom spacing so the title sits centered between sections */
+  margin: 0 0 clamp(50px, 4.5vw, 80px) 0;
 `;
 
 const Grid = styled.div`
