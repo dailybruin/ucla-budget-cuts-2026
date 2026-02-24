@@ -109,7 +109,7 @@ const Credits = ({ developers = [], designers = [] }) => {
           <Grid>
             {developers.map((dev, index) => (
               <CreditCard key={index}>
-                <Name>{dev.first_name} {dev.last_name}</Name>
+                <Name>{dev.last_name} {dev.first_name}</Name>
                 <Position>{dev.position}</Position>
               </CreditCard>
             ))}
