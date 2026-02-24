@@ -7,22 +7,23 @@ const FLATPAGE_BLUE = "#165383";
 const Bar = styled.header`
   position: sticky;
   top: 0;
-  background: #165383;
-  z-index: 2001;
-  z-index: 2001;
-  background: #165383;
-  width: 100%;
-  height: 48px;
+  margin-top: -10%;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   background: ${FLATPAGE_BLUE};
+  z-index: 2001;
+  height: 48px;
   color: #fff;
 `;
 
 const Inner = styled.div`
   height: 100%;
   width: 100%;
+  max-width: 100%;
   padding: 0 18px;
   box-sizing: border-box;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
