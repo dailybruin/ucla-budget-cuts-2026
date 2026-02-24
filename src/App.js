@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -7,7 +8,7 @@ import Credits from "./components/Credits";
 import ArticleCardsSection from "./components/ArticleCardsSection";
 import MapDesktopPage from "./map-desktop.js";
 import MapMobilePage from "./map-mobile.js";
-import TimelineContainer from './components/TimelineContainer';
+import TimelineContainer from "./components/TimelineContainer";
 
 // Fallback articles
 const a1 = {
@@ -32,48 +33,78 @@ const a2 = {
 
 const fallbackArticles = [a1, a2, a1, a2, a1, a2, a1, a2, a1, a2, a1, a2];
 
+// helper: true on touch devices (won't flip when zooming)
+const isCoarsePointer = () =>
+  window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+
 function App() {
-  // const [ data, setData ] = useState(null);
   // Main article data
   const [data, setData] = useState({
-    headline: "\"A Perfect Storm\": How Budget Cuts Have Impacted UCLA",
-    subheading: `UCLA is generating an annual structural budget deficit approaching $425 million, Stephen Agostini, UCLA's Chief Financial Officer, told the Daily Bruin on Feb. 6. The university has not posted its annual <u>financial reports</u> – which Agostini said contain erroneous numbers – for the last two fiscal years as of early February. Chancellor Julio Frenk described several factors – some of which are laid out in the timeline below – as combining to create "a perfect storm" culminating in UCLA's current budget crisis. Programs across campus have also had their funding slashed, from student-run retention projects to tour guide organizations.\n\nThe Daily Bruin News team's special project – "A Perfect Storm": How Budget Cuts Have Impacted UCLA – outlines the history behind UCLA's budget shortfalls and tracks the parts of campus that have faced cuts.`
+    headline: '"A Perfect Storm": How Budget Cuts Have Impacted UCLA',
+    subheading: `UCLA is generating an annual structural budget deficit approaching $425 million, Stephen Agostini, UCLA's Chief Financial Officer, told the Daily Bruin on Feb. 6. The university has not posted its annual <u>financial reports</u> – which Agostini said contain erroneous numbers – for the last two fiscal years as of early February. Chancellor Julio Frenk described several factors – some of which are laid out in the timeline below – as combining to create "a perfect storm" culminating in UCLA's current budget crisis. Programs across campus have also had their funding slashed, from student-run retention projects to tour guide organizations.\n\nThe Daily Bruin News team's special project – "A Perfect Storm": How Budget Cuts Have Impacted UCLA – outlines the history behind UCLA's budget shortfalls and tracks the parts of campus that have faced cuts.`,
+    timeline: [],
+    maps: [],
+
+    articles: null,
+    developer_credits: [],
+    designers_journalist_credit: [],
   });
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  // Mobile/desktop map selection (stable under zoom)
+  const [isMobile, setIsMobile] = useState(isCoarsePointer());
 
-  // Handle window resize for mobile/desktop map
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const mq = window.matchMedia("(hover: none) and (pointer: coarse)");
+    const handler = (e) => setIsMobile(e.matches);
+
+    // Safari compatibility
+    if (mq.addEventListener) mq.addEventListener("change", handler);
+    else mq.addListener(handler);
+
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", handler);
+      else mq.removeListener(handler);
+    };
   }, []);
-  
+
   useEffect(() => {
-      fetch("https://oink.dailybruin.com/api/packages/flatpages/test-package")
-      .then(res => res.json())
-      .then(res => {
-        // console.log("Data:", res.data['article.aml']);
-        if (res.data && res.data['article.aml']) {
-          setData(res.data['article.aml']);
+    fetch("https://oink.dailybruin.com/api/packages/flatpages/test-package")
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.data && res.data["article.aml"]) {
+          setData((prev) => ({
+            ...prev,
+            ...res.data["article.aml"],
+            // if backend provides articles, use them; otherwise keep fallbacks
+            articles:
+              res.data["article.aml"].articles && res.data["article.aml"].articles.length
+                ? res.data["article.aml"].articles
+                : prev.articles,
+          }));
         }
-      })
-      // .catch(err => console.error("Error fetching data:", err));
+      });
+    // .catch(err => console.error("Error fetching data:", err));
   }, []);
 
-  return  (
+  return (
     <div className="App">
       <Header />
+
       <section id="home">
         <Landing data={data} />
         <Subheader data={data} />
       </section>
+
       <section id="timeline">
         <TimelineContainer data={data.timeline} />
       </section>
 
       <section id="map">
-        {isMobile ? <MapMobilePage data={data.maps}/> : <MapDesktopPage data={data.maps}/>}
+        {isMobile ? (
+          <MapMobilePage data={data.maps} />
+        ) : (
+          <MapDesktopPage data={data.maps} />
+        )}
       </section>
 
       <section id="read-more">
@@ -84,8 +115,12 @@ function App() {
       </section>
 
       <section id="about">
-        <Credits developers={data.developer_credits} designers={data.designers_journalist_credit} />
+        <Credits
+          developers={data.developer_credits}
+          designers={data.designers_journalist_credit}
+        />
       </section>
+
       <Footer />
     </div>
   );

@@ -4,17 +4,21 @@ import styled from "styled-components";
 
 const FLATPAGE_BLUE = "#165383";
 
+// Desktop nav only on true desktop widths (prevents iPad portrait / zoom edge cases)
+const DESKTOP_BREAKPOINT = "1024px";
+
 const Bar = styled.header`
   position: sticky;
   top: 0;
-  background: #165383;
   z-index: 2001;
-  z-index: 2001;
-  background: #165383;
+
   width: 100%;
   height: 48px;
   background: ${FLATPAGE_BLUE};
   color: #fff;
+
+  /* prevents tiny overflows from creating horizontal scroll */
+  overflow-x: clip;
 `;
 
 const Inner = styled.div`
@@ -26,43 +30,42 @@ const Inner = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  /* optional: keeps header content centered on large screens */
+  
+
+  min-width: 0;
 `;
 
 /* Left: DAILY BRUIN */
 const Brand = styled.a`
-  border: none;
-  background: transparent;
-  cursor: pointer;
   text-decoration: none;
-
   color: #fff;
-  text-align: center;
+
   font-family: "ITC Century", "Times New Roman", Times, serif;
   font-size: 18px;
-  font-style: normal;
   font-weight: 400;
   line-height: normal;
 
   white-space: nowrap;
-  padding: 0;
+  flex: 0 0 auto;
 `;
 
 /* Right: Desktop nav */
 const DesktopNav = styled.nav`
   display: flex;
   align-items: center;
-  gap: 0;
+  justify-content: flex-end;
 
   border-left: 1px solid rgba(255, 255, 255, 0.35);
+  min-width: 0;
 
-  @media (max-width: 760px) {
+  @media (max-width: ${DESKTOP_BREAKPOINT}) {
     display: none;
   }
 `;
 
 const NavBtn = styled.button`
-  width: 204px;
-  flex-shrink: 0;
   height: 48px;
 
   border: none;
@@ -73,14 +76,17 @@ const NavBtn = styled.button`
   text-align: center;
 
   font-family: "Source Sans 3", system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  font-size: 20px;
-  font-style: normal;
+  font-size: clamp(16px, 1.6vw, 20px);
   font-weight: 600;
   line-height: normal;
 
-  padding: 0;
+  /* fluid width (no fixed 204px) */
+  padding: 0 18px;
 
   border-right: 1px solid rgba(255, 255, 255, 0.35);
+
+  white-space: nowrap;
+  flex: 0 0 auto;
 
   &:hover {
     opacity: 0.9;
@@ -94,7 +100,8 @@ const BurgerButton = styled.button`
   cursor: pointer;
 
   display: none;
-  @media (max-width: 760px) {
+
+  @media (max-width: ${DESKTOP_BREAKPOINT}) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -173,7 +180,7 @@ export default function Header() {
     []
   );
 
-  // (3) Lock body scroll when mobile menu open
+  // Lock body scroll when mobile menu open
   useEffect(() => {
     if (!open) return;
 
@@ -185,14 +192,14 @@ export default function Header() {
     };
   }, [open]);
 
-  //Scroll offset for each section
   const scrollToId = (id) => {
     const el = document.getElementById(id);
     if (!el) return;
 
     const offset = barRef.current?.offsetHeight ?? 48;
-    const extra = 16; //spacing below the nav 
-    const y = el.getBoundingClientRect().top + window.pageYOffset - (offset + extra);
+    const extra = 16;
+    const y =
+      el.getBoundingClientRect().top + window.pageYOffset - (offset + extra);
 
     window.scrollTo({ top: y, behavior: "smooth" });
   };
@@ -207,7 +214,7 @@ export default function Header() {
       <Bar ref={barRef}>
         <Inner>
           <Brand href="https://dailybruin.com" target="_blank" rel="noreferrer">
-          DAILY BRUIN
+            DAILY BRUIN
           </Brand>
 
           <DesktopNav aria-label="Primary navigation">
@@ -227,7 +234,7 @@ export default function Header() {
       <MobileMenu open={open} aria-label="Mobile menu">
         <MobileTop>
           <Brand href="https://dailybruin.com" target="_blank" rel="noreferrer">
-          DAILY BRUIN
+            DAILY BRUIN
           </Brand>
           <BurgerButton
             as="button"
