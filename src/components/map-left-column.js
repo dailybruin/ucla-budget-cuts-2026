@@ -16,7 +16,7 @@ export default function LeftColumn({ defaultProps }) {
     return (
         <div className="left-column-container">
             <MapImage
-                image={defaultProps.map_image}
+                image={data.map_image}
             />
         </div>
     );

@@ -10,7 +10,7 @@ function TextDescription({ mapdescription }) {
   );
 }
 
-export default function RightColumn({ defaultProps, index, setActiveIndex }) {
+export default function RightColumn({ data, index, setActiveIndex }) {
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -43,27 +43,27 @@ export default function RightColumn({ defaultProps, index, setActiveIndex }) {
 
   return (
     <div className="right-column-container" ref={sectionRef}>
-      <TextDescription mapdescription={defaultProps.map_description} />
+      <TextDescription mapdescription={data.map_description} />
 
       <MapArticleCard
-        title={defaultProps.article_title_1}
-        byline={defaultProps.article_byline_1}
-        url={defaultProps.article_url_1}
-        image={defaultProps.article_image_1}
+        title={data.article_title_1}
+        byline={data.article_byline_1}
+        url={data.article_url_1}
+        image={data.article_image_1}
       />
 
       <MapArticleCard
-        title={defaultProps.article_title_2}
-        byline={defaultProps.article_byline_2}
-        url={defaultProps.article_url_2}
-        image={defaultProps.article_image_2}
+        title={data.article_title_2}
+        byline={data.article_byline_2}
+        url={data.article_url_2}
+        image={data.article_image_2}
       />
 
       <MapArticleCard
-        title={defaultProps.article_title_3}
-        byline={defaultProps.article_byline_3}
-        url={defaultProps.article_url_3}
-        image={defaultProps.article_image_3}
+        title={data.article_title_3}
+        byline={data.article_byline_3}
+        url={data.article_url_3}
+        image={data.article_image_3}
       />
     </div>
   );
