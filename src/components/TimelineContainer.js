@@ -20,7 +20,7 @@ const Timeline = styled.div`
     width: 90%;
   }
 
-  @media (max-width: 425px) {
+  @media (max-width: 550px) {
     width: 90%;
     margin-right: 5%;
   }
@@ -37,7 +37,7 @@ const TimelineItem = styled.div`
   `}
 
 
-  @media (max-width: 425px) {
+  @media (max-width: 550px) {
     flex-direction: column;
     padding-bottom: 15vh;
   }
@@ -55,7 +55,7 @@ const DateColumn = styled.div`
     @media (max-width: 768px) {
         text-align: left;
     }
-  @media (max-width: 425px) {
+  @media (max-width: 550px) {
     width: 100%;
     margin-bottom: 0;
   }
@@ -111,7 +111,7 @@ const ContentColumn = styled.div`
   @media (max-width: 768px) {
     width: 100%;
   }
-  @media (max-width: 425px) {
+  @media (max-width: 550px) {
     margin-left: 5%;
   }
 `;
