@@ -93,7 +93,7 @@ const Credits = ({ developers = [], designers = [] }) => {
       <GlobalStyle />
       <CreditsContainer>
         <Section>
-          <SectionTitle>Written by</SectionTitle>
+          <SectionTitle>Reporting by</SectionTitle>
           <Grid style={{ gridTemplateColumns: '1fr', maxWidth: '500px' }}>
             {writers.map((writer, index) => (
               <CreditCard key={index}>

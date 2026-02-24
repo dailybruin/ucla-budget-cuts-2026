@@ -25,3 +25,9 @@
   justify-content: center;
   align-items: center;
 }
+
+@media (max-width: 768px) {
+.text-description-container p{
+font-size: 16px;
+}
+}
