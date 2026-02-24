@@ -1,74 +1,73 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 
-/* Global styles — loads Source Sans 3 from Google Fonts */
-const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@200..900&display=swap');
-`;
-
-/* Breakpoints for responsive design */
-const breakpoints = {
-    mobile: '768px',
-};
-
-/* Centered full-height container — max-width constrains to readable line length */
-const SubheaderContainer = styled.div`
+const SubheaderContainer = styled.section`
     width: 100%;
-    height: 100vh;
-    max-width: 85%;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #fff;
-    margin: 0 auto;
-    @media (max-width: 768px) {
-      padding-bottom: 30%;
-
-    @media (max-width: ${breakpoints.mobile}) {
-        max-width: 90%;
-        align-items: flex-start;
-        padding-top: 10vh;
-    }
+    padding: 4rem 0;
+    box-sizing: border-box;
 `;
 
-/* body md: 1.25em (20px) desktop, 1em (16px) mobile per design spec */
-const SubheaderText = styled.h1`
+const SubheaderText = styled.div`
     font-family: 'Source Sans 3', sans-serif;
     font-weight: 400;
-    color: #000000;
+    font-style: normal;
+    color: #000;
     text-align: left;
-    line-height: 160%;
-    letter-spacing: 0%;
-    width: 100%;
-    padding: 0 1.25em;
-    font-size: 1.25em;
+    line-height: 1;
+    letter-spacing: 160%;
 
-    @media (max-width: ${breakpoints.mobile}) {
-        font-size: 1em; /* mobile body — 16px at base 16px */
+    width: 71.625rem; /* 1146px */
+
+    font-size: 1.25rem; /* 20px */
+
+    @media (max-width: 48em) {
+        width: 21.375rem; /* 342px */
+        font-size: 1rem; /* 16px */
     }
 
     p {
-        margin: 0 0 1em 0; /* Spacing between paragraphs */
+        margin-bottom: 2rem;
     }
 
     p:last-child {
-        margin-bottom: 0; /* Removes excess space after final paragraph */
+        margin-bottom: 0;
     }
 
     a {
-        color: #000000; /* Keeps inline links consistent with surrounding text */
+        text-decoration: underline;
+        color: inherit;
     }
 `;
 
-const Subheader = ({ data }) => {
+const Subheader = () => {
     return (
-        <>
-            <GlobalStyle />
-            {/* id="subheader" is the scroll target for the landing arrow */}
-            <SubheaderContainer id="subheader">
-                {/* Renders subheading from CMS data — renders nothing if subheading is absent */}
-                <SubheaderText>{data?.subheading}</SubheaderText>
-            </SubheaderContainer>
-        </>
+        <SubheaderContainer id="subheader">
+            <SubheaderText>
+                <p>
+                    UCLA is projected to run a $425 million deficit for the 2025-26 fiscal year, Stephen Agostini, UCLA’s former chief financial officer, told the Daily Bruin on Feb. 6. Chancellor Julio Frenk announced that Agostini had been replaced as CFO four days after the Bruin published a Feb. 13 article in which Agostini alleged that UCLA administrators have mismanaged the university’s finances, contributing to the deficit. Mary Osako, vice chancellor for strategic communications, called Agostini’s deficit projection an overestimate in a Feb. 17 statement but did not provide additional financial data.
+                </p>
+
+                <p>
+                    The university has not posted annual{" "}
+                    <a
+                        href="https://www.finance.ucla.edu/corporate-accounting/ucla-annual-financial-reports"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        financial reports
+                    </a>
+                    , which Agostini said contain erroneous numbers, for the last two fiscal years as of mid-February. Frenk told the Daily Bruin Jan. 15 that several factors – some of which are laid out in the timeline below – have combined to create “a perfect storm” culminating in UCLA’s current budget crisis. Programs across campus have had their funding slashed, from student-run retention projects to tour guide organizations.
+                </p>
+
+                <p>
+                    The Daily Bruin News team’s special project – “A Perfect Storm”: How Budget Cuts Have Impacted UCLA – outlines the history behind UCLA’s budget shortfalls and tracks the parts of campus that have faced cuts.
+                </p>
+            </SubheaderText>
+        </SubheaderContainer>
     );
 };
 
